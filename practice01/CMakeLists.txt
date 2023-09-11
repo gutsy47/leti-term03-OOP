@@ -3,5 +3,10 @@ project(practice01)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(practice01 main01.cpp)
+add_executable(practice01 main01.cpp
+        matrix.cpp
+        matrix.h
+        application.cpp
+        application.h
+        number.h)
 
