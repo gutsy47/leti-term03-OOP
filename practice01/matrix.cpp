@@ -3,7 +3,7 @@
 /// Creates a 3x3 matrix filled with zeros
 TMatrix::TMatrix() {
     size = 3;
-    values.resize(size, std::vector<number>(size, 0));
+    values.resize(size, std::vector<number>(size, 0));;
 }
 
 /// Creates a matrix of custom size filled with zeros
@@ -11,12 +11,24 @@ TMatrix::TMatrix(unsigned short size) : size(size) {
     values.resize(size, std::vector<number>(size, 0));
 }
 
-void TMatrix::setValues() {
+void TMatrix::setValues(std::vector<std::vector<number>>& newValues) {
+    // Wrong size error
+    if (newValues.size() != size) {
+        std::cout << "Wrong size. Matrix wasn't updated\n";
+        return;
+    }
 
+    values = newValues;
 }
 
 /// Resizes the matrix and fills new fields with zeros or deletes existing ones if newSize < size
 void TMatrix::setSize(unsigned short newSize) {
+    // Wrong size error
+    if (newSize <= 0) {
+        std::cout << "Wrong size. Matrix wasn't updated\n";
+        return;
+    }
+
     if (newSize == size) {
         // No changes. Return
         return;
@@ -50,8 +62,9 @@ unsigned short TMatrix::getSize() const {
 std::ostream& operator<< (std::ostream& os, TMatrix& matrix) {
     unsigned short N = matrix.getSize();
     for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j)
-            os << matrix.values[i][j] << ' ';
+        for (int j = 0; j < N; ++j) {
+            os << matrix.values[i][j] << "\t\t";
+        }
         std::cout << std::endl;
     }
     return os;

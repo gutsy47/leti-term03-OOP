@@ -15,7 +15,7 @@ class TMatrix {
 public:
     TMatrix();                                                  // Creates a 3x3 matrix filled with zeros
     explicit TMatrix(unsigned short);                           // Creates a matrix of custom size filled with zeros
-    void setValues();                                           // Updates the matrix's values
+    void setValues(std::vector<std::vector<number>>&);          // Updates the matrix's values
     void setSize(unsigned short);                               // Resizes the matrix (saves old values)
     [[nodiscard]] unsigned short getSize() const;               // Returns the current size
     friend std::ostream& operator<< (std::ostream&, TMatrix&);  // Replaces the << operator

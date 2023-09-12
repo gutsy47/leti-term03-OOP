@@ -33,8 +33,8 @@ int TApplication::execute() {
     // Init the matrix
     int matrixSize;
     std::cout << "<< Enter the size of the matrix:\n>> ";
-    while (!inputInt(matrixSize, true, true))
-        std::cout << "<< Another try (size must be not negative)...\n>>";
+    while (!inputInt(matrixSize, true, true) && matrixSize != 0)
+        std::cout << "<< Another try (size must be not negative)...\n>> ";
     TMatrix matrix(matrixSize);
     std::cout << "Matrix:\n" << matrix;
 
@@ -46,42 +46,66 @@ int TApplication::execute() {
         // All good. Executing
         switch (userChoice) {
             // Print the matrix
-            case 'p':
+            case 'p': {
                 std::cout << matrix;
                 break;
+            }
 
             // Set new size of the matrix
             case 's': {
                 std::cout << "<< Enter the size of the matrix:\n>> ";
-                while (!inputInt(matrixSize, true, true))
-                    std::cout << "<< Another try (size must be not negative)...\n>>";
+                while (!inputInt(matrixSize, true, true)  && matrixSize != 0)
+                    std::cout << "<< Another try (size must be not negative)...\n>> ";
                 matrix.setSize(matrixSize);
                 std::cout << "Updated matrix:\n" << matrix;
                 break;
             }
 
             // Set values of the matrix
-            case 'i':
-                matrix.setValues();
-                std::cout << "Updated matrix:\n" << matrix;
+            case 'i': {
+                unsigned int size = matrix.getSize();
+                std::vector<std::vector<number>> newValues(size, std::vector<number>(size, 0));
+
+                std::cout << "<< Enter the values\n";
+                bool isGood = true; // Flag of input's correctness
+                for (int i = 0; i < size; ++i) {
+                    for (unsigned int j = 0; j < size; ++j) {
+                        number value;
+                        if (!(std::cin >> value).fail()) newValues[i][j] = value;
+                        else {
+                            std::cout << "Invalid input\n";
+                            std::cin.clear();
+                            std::cin.ignore(10000, '\n');
+                            isGood = false;
+                            break;
+                        }
+                    }
+                    if (!isGood) break;
+                }
+
+                if (isGood) matrix.setValues(newValues);
                 break;
+            }
 
 
             // Determinant
-            case '1':
+            case '1': {
                 std::cout << "Determinant = " << matrix.getDeterminant() << std::endl;
                 break;
+            }
 
             // Transpose
-            case '2':
+            case '2': {
                 matrix.transpose();
                 std::cout << "Matrix's been transposed. Updated matrix:\n" << matrix;
                 break;
+            }
 
             // Rank
-            case '3':
+            case '3': {
                 std::cout << "Rank = " << matrix.getRank() << std::endl;
                 break;
+            }
 
             // Runtime error. Unknown command
             default: std::cout << "RuntimeError. Unknown command\n";
