@@ -1,18 +1,43 @@
 #include "application.h"
-#include "number.h"
 #include "matrix.h"
 
 #include <iostream>
 #include <iomanip>
 
-Application::Application() = default;
+/**
+ * Reads the integer input via cin
+ * @param[out] variable Reference to a declared variable
+ * @param[in] isSpaceSep If true, it does not check the last character of the input for newline
+ * @param[in] isUnsigned If true, then negative numbers will lead to an error
+ * @return True if input was correct, else false
+ */
+bool inputInt(int &variable, bool isSpaceSep = false, bool isUnsigned = false) {
+    std::cin >> variable;
+    if (std::cin.fail() || (isUnsigned && variable < 0) || (isSpaceSep && std::cin.peek() != '\n')) {
+        std::cout << "Invalid input\n";
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+        return false;
+    }
+    return true;
+}
+
+TApplication::TApplication() = default;
 
 /**
  * Executes the program
  * @return 0 if correct exit
  */
-int Application::execute() {
-    Matrix matrix;
+int TApplication::execute() {
+
+    // Init the matrix
+    int matrixSize;
+    std::cout << "<< Enter the size of the matrix:\n>> ";
+    while (!inputInt(matrixSize, true, true))
+        std::cout << "<< Another try (size must be not negative)...\n>>";
+    TMatrix matrix(matrixSize);
+    std::cout << "Matrix:\n" << matrix;
+
     char userChoice;                                // Get command from user
     while (true) {
         if (!menu(userChoice)) continue;         // Error occurred
@@ -20,20 +45,31 @@ int Application::execute() {
 
         // All good. Executing
         switch (userChoice) {
-            // Set values of the matrix
-            case 'i':
-                matrix.set_values();
-                std::cout << "Updated matrix:\n" << matrix;
-                break;
-
             // Print the matrix
             case 'p':
                 std::cout << matrix;
                 break;
 
+            // Set new size of the matrix
+            case 's': {
+                std::cout << "<< Enter the size of the matrix:\n>> ";
+                while (!inputInt(matrixSize, true, true))
+                    std::cout << "<< Another try (size must be not negative)...\n>>";
+                matrix.setSize(matrixSize);
+                std::cout << "Updated matrix:\n" << matrix;
+                break;
+            }
+
+            // Set values of the matrix
+            case 'i':
+                matrix.setValues();
+                std::cout << "Updated matrix:\n" << matrix;
+                break;
+
+
             // Determinant
             case '1':
-                std::cout << "Determinant = " << matrix.get_determinant() << std::endl;
+                std::cout << "Determinant = " << matrix.getDeterminant() << std::endl;
                 break;
 
             // Transpose
@@ -44,7 +80,7 @@ int Application::execute() {
 
             // Rank
             case '3':
-                std::cout << "Rank = " << matrix.get_rank() << std::endl;
+                std::cout << "Rank = " << matrix.getRank() << std::endl;
                 break;
 
             // Runtime error. Unknown command
@@ -60,10 +96,11 @@ int Application::execute() {
  * @param[out] userChoice Reference to a declared user's choice variable
  * @return True if input was correct, else false (error)
  */
-bool Application::menu(char &userChoice) {
+bool TApplication::menu(char &userChoice) {
     std::cout << "<< Action:\n"
-                 "   i. Set values of the matrix\n"
                  "   p. Print the matrix\n"
+                 "   i. Set values of the matrix\n"
+                 "   s. Set new size of the matrix\n"
                  "   1. Calculate determinant\n"
                  "   2. Transpose matrix\n"
                  "   3. Calculate rank\n"

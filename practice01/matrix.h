@@ -1,30 +1,32 @@
-#ifndef OOP_MATRIX_H
-#define OOP_MATRIX_H
+#ifndef OOP_TMatrix_H
+#define OOP_TMatrix_H
 
 #include "number.h"
 #include <iostream>
+#include <vector>
 
 /**
- * @class Matrix
+ * @class TMatrix
  * @brief Implementation of square matrix
  * Implement an square matrix with the following functionality:
  * init, print, calculate the determinant, calculate the rank, transpose
  */
-class Matrix {
+class TMatrix {
 public:
-    Matrix();
-    void set_values();
-    number * get_values();
-    static unsigned short get_size();
-    friend std::ostream& operator<< (std::ostream&, Matrix&);
-    int get_determinant();
-    void transpose();
-    unsigned int get_rank();
+    TMatrix();                                                  // Creates a 3x3 matrix filled with zeros
+    explicit TMatrix(unsigned short);                           // Creates a matrix of custom size filled with zeros
+    void setValues();                                           // Updates the matrix's values
+    void setSize(unsigned short);                               // Resizes the matrix (saves old values)
+    [[nodiscard]] unsigned short getSize() const;               // Returns the current size
+    friend std::ostream& operator<< (std::ostream&, TMatrix&);  // Replaces the << operator
+    int getDeterminant();                                       // Calculates & returns the determinant
+    void transpose();                                           // Transposes the matrix
+    unsigned int getRank();                                     // Calculates & returns the rank
 
 private:
-    static const unsigned short size = 3;
-    number values[size][size]{};
+    unsigned short size;                        // Size of the matrix. Can be gotten & changed via methods
+    std::vector<std::vector<number>> values;    // Values of the matrix. Can be printed & changed via methods
 };
 
 
-#endif //OOP_MATRIX_H
+#endif //OOP_TMATRIX_H

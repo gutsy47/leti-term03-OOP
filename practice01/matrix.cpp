@@ -1,26 +1,54 @@
 #include "matrix.h"
 
-Matrix::Matrix() {
-    unsigned short N = Matrix::get_size();
-    for (int i = 0; i < N; ++i)
-        for (int j = 0; j < N; ++j)
-            values[i][j] = i + j + 1;
+/// Creates a 3x3 matrix filled with zeros
+TMatrix::TMatrix() {
+    size = 3;
+    values.resize(size, std::vector<number>(size, 0));
 }
 
-void Matrix::set_values() {
+/// Creates a matrix of custom size filled with zeros
+TMatrix::TMatrix(unsigned short size) : size(size) {
+    values.resize(size, std::vector<number>(size, 0));
+}
+
+void TMatrix::setValues() {
 
 }
 
-number * Matrix::get_values() {
+/// Resizes the matrix and fills new fields with zeros or deletes existing ones if newSize < size
+void TMatrix::setSize(unsigned short newSize) {
+    if (newSize == size) {
+        // No changes. Return
+        return;
+    } else if (newSize < size) {
+        // newSize is lower. Resize the matrix
+        values.resize(newSize, std::vector<number>(newSize));
+        size = newSize;
+    } else {
+        // newSize is greater. Resize and copy the values
+        // Filling existing rows with zeros does not work correctly,
+        // So we have to recreate matrix.values manually
 
+        std::vector<std::vector<number>> newValues(newSize, std::vector<number>(newSize, 0));
+
+        // Use size instead of newSize due to size < newSize. New values will stay 0
+        for (unsigned short i = 0; i < size; ++i)
+            for (unsigned short j = 0; j < size; ++j)
+                newValues[i][j] = values[i][j];
+
+        values = newValues;
+        size = newSize;
+    }
 }
 
-unsigned short Matrix::get_size() {
+/// Returns the current size of the matrix
+unsigned short TMatrix::getSize() const {
     return size;
 }
 
-std::ostream& operator<< (std::ostream& os, Matrix& matrix) {
-    unsigned short N = Matrix::get_size();
+/// Replace basic << operator with updated one. Prints the matrix
+std::ostream& operator<< (std::ostream& os, TMatrix& matrix) {
+    unsigned short N = matrix.getSize();
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j)
             os << matrix.values[i][j] << ' ';
@@ -29,14 +57,17 @@ std::ostream& operator<< (std::ostream& os, Matrix& matrix) {
     return os;
 }
 
-int Matrix::get_determinant() {
+/// Calculates and returns determinant of the matrix
+int TMatrix::getDeterminant() {
     return 0;
 }
 
-void Matrix::transpose() {
+/// Transposes the matrix (rows will be cols and cols will be rows)
+void TMatrix::transpose() {
 
 }
 
-unsigned int Matrix::get_rank() {
+/// Calculates and returns rank of the matrix
+unsigned int TMatrix::getRank() {
     return 0;
 }

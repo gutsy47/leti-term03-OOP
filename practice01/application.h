@@ -1,12 +1,12 @@
 #ifndef OOP_APPLICATION_H
 #define OOP_APPLICATION_H
 
-class Application {
+class TApplication {
 public:
-    Application();
-    static int execute();
+    TApplication();         // Default constructor. May be unused
+    static int execute();   // Executes the main thread
 private:
-    static bool menu(char&);
+    static bool menu(char&); // Shows the menu and waiting for user's choice
 };
 
 
