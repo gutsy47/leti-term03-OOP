@@ -19,9 +19,12 @@ public:
     void setSize(unsigned short);                               // Resizes the matrix (saves old values)
     [[nodiscard]] unsigned short getSize() const;               // Returns the current size
     friend std::ostream& operator<< (std::ostream&, TMatrix&);  // Replaces the << operator
-    int getDeterminant();                                       // Calculates & returns the determinant
+    number getDeterminant();                                    // Calculates & returns the determinant
     void transpose();                                           // Transposes the matrix
     unsigned int getRank();                                     // Calculates & returns the rank
+
+protected:
+    void toUpperTriangularForm();
 
 private:
     unsigned short size;                        // Size of the matrix. Can be gotten & changed via methods

@@ -29,21 +29,14 @@ TApplication::TApplication() = default;
  * @return 0 if correct exit
  */
 int TApplication::execute() {
-
-    // Init the matrix
-    int matrixSize;
-    std::cout << "<< Enter the size of the matrix:\n>> ";
-    while (!inputInt(matrixSize, true, true) && matrixSize != 0)
-        std::cout << "<< Another try (size must be not negative)...\n>> ";
-    TMatrix matrix(matrixSize);
-    std::cout << "Matrix:\n" << matrix;
-
-    char userChoice;                                // Get command from user
+    TMatrix matrix;
+    char userChoice;
     while (true) {
-        if (!menu(userChoice)) continue;         // Error occurred
-        if (userChoice == '0') break;               // Exit command
+        // Get command from the keyboard
+        if (!menu(userChoice)) continue; // Error occurred
+        if (userChoice == '0') break;       // Exit command
 
-        // All good. Executing
+        // Execute
         switch (userChoice) {
             // Print the matrix
             case 'p': {
@@ -54,6 +47,7 @@ int TApplication::execute() {
             // Set new size of the matrix
             case 's': {
                 std::cout << "<< Enter the size of the matrix:\n>> ";
+                int matrixSize;
                 while (!inputInt(matrixSize, true, true)  && matrixSize != 0)
                     std::cout << "<< Another try (size must be not negative)...\n>> ";
                 matrix.setSize(matrixSize);
