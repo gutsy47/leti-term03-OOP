@@ -129,7 +129,7 @@ number TMatrix::getDeterminant() {
     number determinant = 1;
     for (int i = 0; i < size; ++i)
         determinant *= upperMatrix.values[i][i];
-    return determinant;
+    return (determinant == -0 ? 0 : determinant);
 }
 
 /// Calculates and returns rank of the matrix
