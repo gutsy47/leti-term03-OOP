@@ -100,9 +100,14 @@ void TMatrix::toUpperTriangularForm() {
         // Factor is how we need to change the subtrahend number to get zero
         // factor = numberBelowThePivot / subtrahendNumber
         // currentElement -= numberBelowTheCurrent * factor
-        for (int i = pR + 1; i < size; ++i)
-            for (int j = pC; j < size; ++j)
-                values[i][j] -= values[pR][j] * values[i][pC] / values[pR][pC];
+        for (int i = pR + 1; i < size; ++i) {
+            number factor = values[i][pC] / values[pR][pC];
+            for (int j = pC; j < size; ++j) {
+                values[i][j] -= values[pR][j] * factor;
+                // Have to use round due to periodical fractals (e.g. 5/6 -> smh*10e-16)
+                values[i][j] = std::round(values[i][j] * std::pow(10, 5)) / std::pow(10, 5);
+            }
+        }
 
         rowsUpdated++;
         if (rowsUpdated == size - 1) break;
