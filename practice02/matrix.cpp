@@ -103,9 +103,10 @@ void TMatrix::toUpperTriangularForm() {
         for (int i = pR + 1; i < size; ++i) {
             number factor = values[i][pC] / values[pR][pC];
             for (int j = pC; j < size; ++j) {
-                values[i][j] -= values[pR][j] * factor;
+                values[i][j] = values[i][j] - values[pR][j] * factor;
                 // Have to use round due to periodical fractals (e.g. 5/6 -> smh*10e-16)
-                values[i][j] = std::round(values[i][j] * std::pow(10, 5)) / std::pow(10, 5);
+                values[i][j].real = std::round(values[i][j].real * std::pow(10, 5)) / std::pow(10, 5);
+                values[i][j].image = std::round(values[i][j].image * std::pow(10, 5)) / std::pow(10, 5);
             }
         }
 
@@ -126,10 +127,10 @@ number TMatrix::getDeterminant() {
     upperMatrix.toUpperTriangularForm();
 
     // Calculate the determinant & return
-    number determinant = 1;
+    number determinant(1);
     for (int i = 0; i < size; ++i)
-        determinant *= upperMatrix.values[i][i];
-    return (determinant == -0 ? 0 : determinant);
+        determinant = determinant * upperMatrix.values[i][i];
+    return determinant;
 }
 
 /// Calculates and returns rank of the matrix

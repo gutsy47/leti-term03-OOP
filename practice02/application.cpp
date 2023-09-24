@@ -84,7 +84,8 @@ int TApplication::execute() {
 
             // Determinant
             case '1': {
-                std::cout << "Determinant = " << matrix.getDeterminant() << std::endl;
+                number answer = matrix.getDeterminant();
+                std::cout << "Determinant = " << answer << std::endl;
                 break;
             }
 

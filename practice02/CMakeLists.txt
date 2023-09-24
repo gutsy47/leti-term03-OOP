@@ -8,5 +8,7 @@ add_executable(practice02 main02.cpp
         matrix.h
         application.cpp
         application.h
-        number.h)
+        number.h
+        mycomplex.h
+        mycomplex.cpp)
 
