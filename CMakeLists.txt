@@ -4,3 +4,4 @@ project(OOP)
 set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(practice01)
+add_subdirectory(practice02)
