@@ -68,5 +68,3 @@ bool Complex::operator== (Complex num) const {
 bool Complex::operator!= (Complex num) const {
     return (real != num.real) || (image != num.image);
 }
-
-
