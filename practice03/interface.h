@@ -29,8 +29,8 @@ private:
     int matrixSize;
 
 public:
-    TInterface(QWidget *parent = nullptr, int size = 1);
-    ~TInterface();
+    explicit TInterface(QWidget *parent = nullptr, int size = 1);
+    ~TInterface() override;
 
 public slots:
     void print();

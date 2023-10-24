@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
         // Create and show interface, execute app
         TInterface w(nullptr, size);
         w.show();
-        return a.exec();
+        return a.exec(); // NOLINT(*-static-accessed-through-instance)
     }
 
     return 0; // User closed the input window
