@@ -87,11 +87,26 @@ TRational TRational::operator/ (TRational num) const {
 }
 
 
+// Floating point in bool operators may cause problems
+// The reason is the imprecision of the data storage
+// Actually, I'll try to fix it
+const int MATH_PRECISION = 7;
+
 bool TRational::operator== (TRational num) const {
-    return (numerator / divisor) == (num.numerator / num.divisor);
+    double left = double(numerator) / double(divisor);
+    double right = double(num.numerator) / double(num.divisor);
+    left = std::round(left * std::pow(10, MATH_PRECISION)) / std::pow(10, MATH_PRECISION);
+    right = std::round(right * std::pow(10, MATH_PRECISION)) / std::pow(10, MATH_PRECISION);
+
+    return left == right;
 }
 
 
 bool TRational::operator!= (TRational num) const {
-    return (numerator / divisor) != (num.numerator / num.divisor);
+    double left = double(numerator) / double(divisor);
+    double right = double(num.numerator) / double(num.divisor);
+    left = std::round(left * std::pow(10, MATH_PRECISION)) / std::pow(10, MATH_PRECISION);
+    right = std::round(right * std::pow(10, MATH_PRECISION)) / std::pow(10, MATH_PRECISION);
+
+    return left != right;
 }
