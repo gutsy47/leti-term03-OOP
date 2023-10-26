@@ -1,17 +1,43 @@
 #include "interface.h"
 #include "../common/common.h"
+#include <QInputDialog>
+#include <QMessageBox>
 
 
 const int WINDOW_SIZE_X = 360;
 const int WINDOW_SIZE_Y = 370;
-const int MATRIX_SIZE = 3;
 
 
 TInterface::TInterface(QWidget *parent) : QWidget(parent) {
     setWindowTitle("Работа 4");
     setFixedSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
-    matrixSize = MATRIX_SIZE;
+    // Input matrix Size
+    bool isGood;
+    QString userInput = QInputDialog::getText(this, "Matrix size", "Enter size: ", QLineEdit::Normal, "", &isGood);
+    if (isGood && !userInput.isEmpty()) {
+        matrixSize = userInput.toInt(&isGood);
+
+        // The matrix size is now limited to 5.
+        // We can easily remove this limitation by adding the ability to expand the window,
+        // but for educational purposes this does not matter
+        if (matrixSize > 5) {
+            QMessageBox::critical(this, "Error 1", "Size is too big");
+            return;
+        }
+
+        // Size is less or equal to 0
+        if (matrixSize <= 0) {
+            QMessageBox::critical(nullptr, "Error #2", "Size is not positive");
+            return;
+        }
+
+        // Wrong input
+        if (!isGood) {
+            QMessageBox::critical(nullptr, "Error #3", "Wrong input");
+            return;
+        }
+    }
 
     nums.resize(matrixSize);
     delims.resize(matrixSize*matrixSize);
@@ -71,6 +97,8 @@ TInterface::~TInterface() {
 
 void TInterface::formRequest() {
     QString msg;
+    msg += std::to_string(matrixSize);
+    msg += separator;
     for (auto &row : nums)
         for (auto &col : row)
             for (auto &el : col)

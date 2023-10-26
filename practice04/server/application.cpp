@@ -16,21 +16,33 @@ TApplication::TApplication(int argc, char *argv[]) : QCoreApplication(argc, argv
 }
 
 
+QByteArray &operator>> (QByteArray &arr, int &num) {
+    int sepInd = arr.indexOf(separator.toLatin1());
+    if (sepInd > 0) {
+        num = arr.left(sepInd).toInt();
+        arr = arr.right(arr.length() - sepInd - 1);
+    }
+    return arr;
+}
+
+
 void TApplication::receive(QByteArray msg) {
     qDebug() << "TApplication::receive(): \t" << msg;
 
-    QString answer, answerText;
-    std::vector<std::vector<number>> values(3, std::vector<number>(3, 0));
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
+    int matrixSize;
+    msg >> matrixSize;
+    std::vector<std::vector<number>> values(matrixSize, std::vector<number>(matrixSize, 0));
+    for (int i = 0; i < matrixSize; ++i) {
+        for (int j = 0; j < matrixSize; ++j) {
             number num;
             msg >> num;
             values[i][j] = num;
         }
     }
-    TMatrix matrix(3);
+    TMatrix matrix(matrixSize);
     matrix.setValues(values);
 
+    QString answer, answerText;
     int sepInd = msg.indexOf(separator.toLatin1());
     int request = msg.left(sepInd).toInt();
 
