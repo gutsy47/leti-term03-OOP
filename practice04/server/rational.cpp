@@ -11,13 +11,13 @@ TRational::TRational() {
 }
 
 
-TRational::TRational(const double& num) {
+TRational::TRational(const int& num) {
     numerator = num;
     divisor = 1;
 }
 
 
-TRational::TRational(const double& num, const double& div) {
+TRational::TRational(const int& num, const int& div) {
     numerator = num;
     divisor = div == 0 ? 1 : div;
 }

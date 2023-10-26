@@ -6,12 +6,12 @@
 class TRational {
 private:
     static QChar SEPARATOR;
-    double numerator, divisor;
+    int numerator, divisor;
 
 public:
     TRational();
-    TRational(const double&);
-    TRational(const double&, const double&);
+    TRational(const int&);
+    TRational(const int&, const int&);
     TRational(const QByteArray&);
 
     friend QString& operator<< (QString&, TRational);
