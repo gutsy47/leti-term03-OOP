@@ -19,7 +19,7 @@ TApplication::TApplication(int argc, char *argv[]) : QCoreApplication(argc, argv
 void TApplication::receive(QByteArray msg) {
     qDebug() << "TApplication::receive(): \t" << msg;
 
-    QString answer, s;
+    QString answer, answerText;
     std::vector<std::vector<number>> values(3, std::vector<number>(3, 0));
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
@@ -31,33 +31,29 @@ void TApplication::receive(QByteArray msg) {
     TMatrix matrix(3);
     matrix.setValues(values);
 
-    int pos = msg.indexOf(separator.toLatin1());
-    int msgType = msg.left(pos).toInt();
+    int sepInd = msg.indexOf(separator.toLatin1());
+    int request = msg.left(sepInd).toInt();
 
-    switch (msgType) {
+    switch (request) {
         case PRINT_REQUEST:
-            s << matrix;
-            answer << QString().setNum(PRINT_ANSWER) << s;
+            answerText << matrix;
+            answer << QString().setNum(PRINT_ANSWER) << answerText;
+            break;
+        case DETERM_REQUEST:
+            answerText << matrix.getDeterminant();
+            answer << QString().setNum(DETERM_ANSWER) << answerText;
+            break;
+        case RANK_REQUEST:
+            answerText += std::to_string(matrix.getRank());
+            answer << QString().setNum(RANK_ANSWER) << answerText;
+            break;
+        case TRANSPOSE_REQUEST:
+            matrix.transpose();
+            answerText << matrix;
+            answer << QString().setNum(DETERM_ANSWER) << answerText;
             break;
         default:
             return;
     }
     comm->send(QByteArray().append(answer.toStdString()));
-//    switch (t) {
-//        case PRINT_REQUEST:
-//            msg = msg.right(msg.length() - pos - 1);
-//            msg >> x;
-//            v = p.value(x);
-//            s << (QString) x << (QString) v;
-//            answer << QString().setNum(PRINT_ANSWER);
-//            answer += s;
-//            break;
-//        case DETERM_REQUEST:
-////            p.setPrintMode(EPrintModeClassic);
-//            s << p;
-//            answer << QString().setNum(PRINT_ANSWER) << s;
-//            break;
-//        default:
-//            return;
-//    }'
 }

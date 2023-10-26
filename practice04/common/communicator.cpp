@@ -19,7 +19,7 @@ bool TCommunicator::isReady() {
 
 void TCommunicator::send(QByteArray msg) {
     if (ready) writeDatagram(msg, params.sHost, params.sPort);
-    qDebug() << "TCommunicator::send(): " << msg;
+    qDebug() << "TCommunicator::send(): \t" << msg;
 }
 
 
@@ -28,7 +28,7 @@ void TCommunicator::receive() {
         quint64 size = pendingDatagramSize();
         QByteArray msg(size, '\0');
         readDatagram(msg.data(), size);
-        qDebug() << "TCommunicator::recieve(): " << msg;
+        qDebug() << "TCommunicator::receive(): \t" << msg;
         emit received(msg);
     }
 }

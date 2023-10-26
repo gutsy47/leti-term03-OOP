@@ -46,9 +46,9 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent) {
     output->setStyleSheet("QLabel { background-color : black; color : white; }");
 
     connect(btnPrint, SIGNAL(pressed()), this, SLOT(formRequest()));
-//    connect(btnDeterminant, SIGNAL(pressed()), this, SLOT(determinant()));
-//    connect(btnRank, SIGNAL(pressed()), this, SLOT(rank()));
-//    connect(btnTranspose, SIGNAL(pressed()), this, SLOT(transpose()));
+    connect(btnDeterminant, SIGNAL(pressed()), this, SLOT(formRequest()));
+    connect(btnRank, SIGNAL(pressed()), this, SLOT(formRequest()));
+    connect(btnTranspose, SIGNAL(pressed()), this, SLOT(formRequest()));
 }
 
 
@@ -81,6 +81,12 @@ void TInterface::formRequest() {
         msg << QString().setNum(PRINT_REQUEST);
     if (btn == btnDeterminant)
         msg << QString().setNum(DETERM_REQUEST);
+    if (btn == btnRank)
+        msg << QString().setNum(RANK_REQUEST);
+    if (btn == btnTranspose)
+        msg << QString().setNum(TRANSPOSE_REQUEST);
+
+    qDebug() << "TInterface::formRequest(): \t" << msg;
 
     emit request(msg);
 }
@@ -90,22 +96,12 @@ void TInterface::answer(QString msg) {
     qDebug() << "TInterface::answer(): \t" << msg;
 
     QString text;
-    int p = msg.indexOf(separator);
-    int t = msg.left(p).toInt();
-    msg = msg.mid(p + 1, msg.length() - p - 2);
-    switch (t) {
-        case PRINT_ANSWER:
-            p = msg.indexOf(separator);
-            text += msg.left(p);
-//            text += msg.right(msg.length() - p - 1);
-            output->setText(text);
-            break;
-//        case DETERM_ANSWER:
-//            text = "p(x) = ";
-//            text += msg;
-//            output->setText(text);
-//            break;
-        default:
-            break;
-    }
+    int sepInd = msg.indexOf(separator);
+    int answer = msg.left(sepInd).toInt();
+    if (answer >= LAST_ELEMENT) return;
+
+    msg = msg.mid(sepInd + 1, msg.length() - sepInd - 2);
+    sepInd = msg.indexOf(separator);
+    text += msg.left(sepInd);
+    output->setText(text);
 }
