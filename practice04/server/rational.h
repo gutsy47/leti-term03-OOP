@@ -17,6 +17,8 @@ public:
     friend QString& operator<< (QString&, TRational);
     friend QByteArray& operator>> (QByteArray&, TRational&);
 
+    TRational toProperFraction();
+
     TRational operator+ (TRational) const;
     TRational operator- (TRational) const;
     TRational operator* (TRational) const;

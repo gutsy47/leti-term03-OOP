@@ -55,11 +55,28 @@ QByteArray &operator>>(QByteArray &arr, TRational &num) {
 }
 
 
+TRational TRational::toProperFraction() {
+    // Get grand common divisor (gcd)
+    int gcd = numerator;
+    int div = divisor;
+    while (div != 0) {
+        int temp = div;
+        div = gcd % div;
+        gcd = temp;
+    }
+
+    numerator /= gcd;
+    divisor /= gcd;
+
+    return *this;
+}
+
+
 TRational TRational::operator+ (TRational num) const {
     TRational temp;
     temp.numerator = numerator * num.divisor + num.numerator * divisor;
     temp.divisor = divisor * num.divisor;
-    return temp;
+    return temp.toProperFraction();
 }
 
 
@@ -67,7 +84,7 @@ TRational TRational::operator- (TRational num) const {
     TRational temp;
     temp.numerator = numerator * num.divisor - num.numerator * divisor;
     temp.divisor = divisor * num.divisor;
-    return temp;
+    return temp.toProperFraction();
 }
 
 
@@ -75,7 +92,7 @@ TRational TRational::operator* (TRational num) const {
     TRational temp;
     temp.numerator = numerator * num.numerator;
     temp.divisor = divisor * num.divisor;
-    return temp;
+    return temp.toProperFraction();
 }
 
 
@@ -83,7 +100,7 @@ TRational TRational::operator/ (TRational num) const {
     TRational temp;
     temp.numerator = numerator * num.divisor;
     temp.divisor = divisor * num.numerator;
-    return temp;
+    return temp.toProperFraction();
 }
 
 
