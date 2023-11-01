@@ -1,6 +1,6 @@
 #include "application.h"
 #include "../common/common.h"
-#include "matrix.h"
+#include "square_matrix.h"
 #include "number.h"
 #include <vector>
 
@@ -39,7 +39,7 @@ void TApplication::receive(QByteArray msg) {
             values[i][j] = num;
         }
     }
-    TMatrix matrix(matrixSize);
+    TSquareMatrix matrix(matrixSize);
     matrix.setValues(values);
 
     QString answer, answerText;
