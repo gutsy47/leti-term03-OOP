@@ -9,7 +9,7 @@ const int WINDOW_SIZE_Y = 370;
 
 
 TInterface::TInterface(QWidget *parent) : QWidget(parent) {
-    setWindowTitle("Работа 4");
+    setWindowTitle("Работа 5");
     setFixedSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
     // Input matrix Size

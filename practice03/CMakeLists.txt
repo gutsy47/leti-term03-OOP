@@ -11,7 +11,6 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt6 COMPONENTS
         Core
         Gui
-        Widgets
         REQUIRED)
 
 add_executable(practice03
@@ -30,7 +29,6 @@ add_executable(practice03
 target_link_libraries(practice03
         Qt::Core
         Qt::Gui
-        Qt::Widgets
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)

@@ -6,7 +6,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(practice01)
 add_subdirectory(practice02)
 add_subdirectory(practice03)
-
-# May be added soon. Compile using qmake now
-#add_subdirectory(practice04/client)
-#add_subdirectory(practice04/server)
+add_subdirectory(practice05/server)
+add_subdirectory(practice05/client)
