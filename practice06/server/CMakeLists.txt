@@ -20,16 +20,16 @@ add_executable(practice06-server
         application.cpp
         main.cpp
         matrix.h
-        matrix.cpp
         square_matrix.h
-        square_matrix.cpp
         rational.h
         rational.cpp
-        number.h
+        mycomplex.h
+        mycomplex.cpp
         ../common/common.h
         ../common/common.cpp
         ../common/communicator.h
         ../common/communicator.cpp
+        mydouble.h
 )
 
 target_link_libraries(practice06-server

@@ -18,6 +18,13 @@ enum messages {
 };
 
 
+enum modes {
+    D_MODE = 1,
+    C_MODE,
+    R_MODE
+};
+
+
 extern const QChar separator;
 
 

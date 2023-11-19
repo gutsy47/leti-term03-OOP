@@ -9,7 +9,7 @@ const int WINDOW_SIZE_Y = 350;
 
 
 TInterface::TInterface(QWidget *parent) : QWidget(parent) {
-    setWindowTitle("Работа 5");
+    setWindowTitle("Работа 6");
     setFixedSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
     // Input matrix Size
@@ -40,8 +40,6 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent) {
     }
 
     nums.resize(matrixSize);
-    delims.resize(matrixSize*matrixSize);
-
     for (int i = 0; i < matrixSize; ++i) {
         for (int j = 0; j < matrixSize; ++j) {
             nums[i].resize(matrixSize);
@@ -50,11 +48,8 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent) {
             nums[i][j][0] = new QLineEdit("0", this);
             nums[i][j][0]->setGeometry(70*j + 10, 40*i + 10, 25, 25);
 
-            delims[i+j] = new QLabel(" /", this);
-            delims[i+j]->setGeometry(70*j + 35, 40*i + 10, 10, 25);
-
             nums[i][j][1] = new QLineEdit("0", this);
-            nums[i][j][1]->setGeometry(70*j + 45, 40*i + 10, 25, 25);
+            nums[i][j][1]->setGeometry(70*j + 37, 40*i + 10, 25, 25);
         }
     }
 
@@ -69,6 +64,7 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent) {
 
     doubleMode = new QRadioButton("Double", this);
     doubleMode->setGeometry(10, 210, 75, 30);
+    doubleMode->setChecked(true);
     complexMode = new QRadioButton("Complex", this);
     complexMode->setGeometry(10, 245, 75, 30);
     rationalMode = new QRadioButton("Rational", this);
@@ -86,8 +82,6 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent) {
 
 
 TInterface::~TInterface() {
-    for (auto &delim : delims)
-        delete delim;
     for (auto &row : nums)
         for (auto &col : row)
             for (auto &el : col)
@@ -110,10 +104,20 @@ void TInterface::formRequest() {
     QString msg;
     msg += std::to_string(matrixSize);
     msg += separator;
-    for (auto &row : nums)
-        for (auto &col : row)
-            for (auto &el : col)
-                msg << el->text();
+
+    if (!doubleMode->isChecked()) {
+        msg << QString().setNum((complexMode->isChecked() ? C_MODE : R_MODE));
+        for (auto &row : nums)
+            for (auto &col : row)
+                for (auto &el : col)
+                    msg << el->text();
+    } else {
+        msg << QString().setNum(D_MODE);
+        for (auto &row : nums)
+            for (auto &col : row)
+                msg << col[0]->text();
+    }
+
     auto *btn = (QPushButton*) sender();
 
     if (btn == btnPrint)

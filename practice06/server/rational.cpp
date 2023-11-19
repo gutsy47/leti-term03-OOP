@@ -104,9 +104,7 @@ TRational TRational::operator/ (TRational num) const {
 }
 
 
-// Floating point in bool operators may cause problems
-// The reason is the imprecision of the data storage
-// Actually, I'll try to fix it
+// Floating point in bool operators may cause problems due to the imprecision of the data storage
 const int MATH_PRECISION = 7;
 
 bool TRational::operator== (TRational num) const {

@@ -15,7 +15,6 @@ class TInterface : public QWidget {
 private:
     Q_OBJECT
 
-    std::vector<QLabel*> delims;
     std::vector<std::vector<std::vector<QLineEdit*>>> nums;
 
     QPushButton *btnPrint;
