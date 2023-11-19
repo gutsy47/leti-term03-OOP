@@ -16,11 +16,11 @@ TApplication::TApplication(int argc, char *argv[]) : QApplication(argc, argv) {
 }
 
 
-void TApplication::fromCommunicator(QByteArray msg) {
+void TApplication::fromCommunicator(const QByteArray& msg) {
     interface->answer(QString(msg));
 }
 
 
-void TApplication::toCommunicator(QString msg) {
+void TApplication::toCommunicator(const QString& msg) {
     comm->send(QByteArray().append(msg.toStdString()));
 }

@@ -12,7 +12,7 @@ public:
     TRational();
     TRational(const int&);
     TRational(const int&, const int&);
-    TRational(const QByteArray&);
+    explicit TRational(const QByteArray&);
 
     friend QString& operator<< (QString&, TRational);
     friend QByteArray& operator>> (QByteArray&, TRational&);

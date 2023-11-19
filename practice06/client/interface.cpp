@@ -114,7 +114,7 @@ void TInterface::formRequest() {
         for (auto &col : row)
             for (auto &el : col)
                 msg << el->text();
-    QPushButton *btn = (QPushButton*) sender();
+    auto *btn = (QPushButton*) sender();
 
     if (btn == btnPrint)
         msg << QString().setNum(PRINT_REQUEST);
@@ -135,12 +135,12 @@ void TInterface::answer(QString msg) {
     qDebug() << "TInterface::answer(): \t" << msg;
 
     QString text;
-    int sepInd = msg.indexOf(separator);
+    int sepInd = (int) msg.indexOf(separator);
     int answer = msg.left(sepInd).toInt();
     if (answer >= LAST_ELEMENT) return;
 
     msg = msg.mid(sepInd + 1, msg.length() - sepInd - 2);
-    sepInd = msg.indexOf(separator);
+    sepInd = (int) msg.indexOf(separator);
     text += msg.left(sepInd);
     output->setText(text);
 }

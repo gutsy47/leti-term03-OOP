@@ -12,12 +12,7 @@ TCommunicator::TCommunicator(TCommParams &pars, QObject *parent) : QUdpSocket(pa
 }
 
 
-bool TCommunicator::isReady() {
-    return ready;
-}
-
-
-void TCommunicator::send(QByteArray msg) {
+void TCommunicator::send(const QByteArray& msg) {
     if (ready) writeDatagram(msg, params.sHost, params.sPort);
     qDebug() << "TCommunicator::send(): \t" << msg;
 }
@@ -26,8 +21,8 @@ void TCommunicator::send(QByteArray msg) {
 void TCommunicator::receive() {
     if (hasPendingDatagrams()) {
         quint64 size = pendingDatagramSize();
-        QByteArray msg(size, '\0');
-        readDatagram(msg.data(), size);
+        QByteArray msg((int)size, '\0');
+        readDatagram(msg.data(), (int)size);
         qDebug() << "TCommunicator::receive(): \t" << msg;
         emit received(msg);
     }

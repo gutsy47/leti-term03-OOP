@@ -22,14 +22,13 @@ private:
     TCommParams params;
 
 public:
-    TCommunicator(TCommParams &, QObject *parent = nullptr);
-    bool isReady();
+    explicit TCommunicator(TCommParams &, QObject *parent = nullptr);
 
 signals:
     void received(QByteArray);
 
 public slots:
-    void send(QByteArray);
+    void send(const QByteArray&);
 
 private slots:
     void receive();

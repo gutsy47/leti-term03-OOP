@@ -20,8 +20,8 @@ public:
     TApplication(int, char **);
 
 public slots:
-    void fromCommunicator(QByteArray);
-    void toCommunicator(QString);
+    void fromCommunicator(const QByteArray&);
+    void toCommunicator(const QString&);
 };
 
 #endif // APPLICATION_H

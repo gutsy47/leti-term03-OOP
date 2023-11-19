@@ -24,9 +24,9 @@ TRational::TRational(const int& num, const int& div) {
 
 
 TRational::TRational(const QByteArray &arr) {
-    int sepInd = arr.indexOf(SEPARATOR.toLatin1());
-    numerator = arr.left(sepInd).toDouble();
-    divisor = arr.right(arr.length() - sepInd - 1).toDouble();
+    int sepInd = (int) arr.indexOf(SEPARATOR.toLatin1());
+    numerator = (int) arr.left(sepInd).toDouble();
+    divisor = (int) arr.right(arr.length() - sepInd - 1).toDouble();
 }
 
 
@@ -45,8 +45,8 @@ QString& operator<< (QString& os, TRational num) {
 
 
 QByteArray &operator>>(QByteArray &arr, TRational &num) {
-    int sepInd = arr.indexOf(TRational::SEPARATOR.toLatin1());
-    sepInd =  arr.indexOf(TRational::SEPARATOR.toLatin1(), sepInd + 1);
+    int sepInd = (int) arr.indexOf(TRational::SEPARATOR.toLatin1());
+    sepInd =  (int) arr.indexOf(TRational::SEPARATOR.toLatin1(), sepInd + 1);
     if (sepInd > 0) {
         num = TRational(arr.left(sepInd));
         arr = arr.right(arr.length() - sepInd - 1);

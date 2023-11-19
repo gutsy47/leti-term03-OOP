@@ -17,7 +17,7 @@ TApplication::TApplication(int argc, char *argv[]) : QCoreApplication(argc, argv
 
 
 QByteArray &operator>> (QByteArray &arr, int &num) {
-    int sepInd = arr.indexOf(separator.toLatin1());
+    int sepInd = (int) arr.indexOf(separator.toLatin1());
     if (sepInd > 0) {
         num = arr.left(sepInd).toInt();
         arr = arr.right(arr.length() - sepInd - 1);
@@ -43,7 +43,7 @@ void TApplication::receive(QByteArray msg) {
     matrix.setValues(values);
 
     QString answer, answerText;
-    int sepInd = msg.indexOf(separator.toLatin1());
+    int sepInd = (int) msg.indexOf(separator.toLatin1());
     int request = msg.left(sepInd).toInt();
 
     switch (request) {
@@ -62,7 +62,7 @@ void TApplication::receive(QByteArray msg) {
         case TRANSPOSE_REQUEST:
             matrix.transpose();
             answerText << matrix;
-            answer << QString().setNum(DETERM_ANSWER) << answerText;
+            answer << QString().setNum(TRANSPOSE_ANSWER) << answerText;
             break;
         default:
             return;
