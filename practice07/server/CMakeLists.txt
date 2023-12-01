@@ -19,17 +19,10 @@ add_executable(practice07-server
         application.h
         application.cpp
         main.cpp
-        matrix.h
-        square_matrix.h
-        rational.h
-        rational.cpp
-        mycomplex.h
-        mycomplex.cpp
         ../common/common.h
         ../common/common.cpp
         ../common/communicator.h
         ../common/communicator.cpp
-        mydouble.h
         direct_graph.cpp
         direct_graph.h
 )

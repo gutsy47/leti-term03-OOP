@@ -22,35 +22,69 @@ QByteArray &operator>> (QByteArray &arr, int &num) {
 }
 
 
+/// Update <values> by data from <path>
+short TApplication::getValues(const std::string path, std::vector<std::vector<int>> &values) {
+    /**
+     * Return values
+     *  0 Success
+     * -1 File Not Found
+     * -2 Invalid Input
+     * -3 Invalid Size
+     * -4 Non-Zero Diagonals
+     */
+
+    // Open file. Return -1 if not found
+    std::ifstream iFile(path);
+    if (!iFile.is_open()) return -1;
+
+    // Get values
+    std::string line;
+    int sizeX = 0, sizeY = 0;
+    while (std::getline(iFile, line)) {
+        std::vector<int> row;
+        sizeY = 0;
+        for (int i = 0; i < line.length(); ++i) {
+            if (line[i] == '0' || line[i] == '1') {
+                if (i != line.length() - 1 && line[i+1] != ' ') return -2; // Not '0' or '1' value error
+                row.push_back(line[i] - '0');
+                sizeY++;
+            } else if (line[i] != ' ') return -2; // Invalid char error
+        }
+        if (sizeX > 0 && sizeY != values[sizeX-1].size()) return -3; // Invalid row size
+        values.push_back(row);
+        sizeX++;
+    }
+    if (sizeX != sizeY) return -3; // Invalid matrix size
+    for (int i = 0; i < sizeX; ++i) if (values[i][i] != 0) return -4; // Invalid diagonals
+
+    iFile.close();
+    return 0;
+}
+
+
 void TApplication::receive(QByteArray msg) {
     qDebug() << "TApplication::receive(): \t" << msg;
 
-    // msg in:
-    // filename
-    // msg out:
-    // isGood, data
+    // Get values from the file
+    std::vector<std::vector<int>> values;
+    short response = getValues(
+            msg.left(msg.indexOf(separator.toLatin1())).toStdString(),
+            values
+    );
 
     QString answer, answerText;
+    answer << QString().setNum(response);
 
-    // Get filename and open it
-
-    // Get data from file
-    // Check data
-    bool isGood = true;
-
-    answer << QString().setNum(isGood ? 1 : -1) << answerText;
-
-    // If bad, send answer 0
-    if (!isGood) {
-        answer << QString().setNum(0);
+    // Bad response. Send error code and return
+    if (response != 0) {
         comm->send(QByteArray().append(answer.toStdString()));
         return;
     }
 
-    // If good, create DrGraph and send 1;graph;
-    // ...
-    answer << QString().setNum(1) << answerText;
-
+    // Good response.
+    // Here we need to do something of those:
+    // 1. Send values (no need in DrGraph obj ig)
+    // 2. Create drawer or drawing and send it instead
 
     comm->send(QByteArray().append(answer.toStdString()));
 }

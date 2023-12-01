@@ -10,6 +10,7 @@
 #include "../common/common.h"
 #include "../common/communicator.h"
 
+#include <fstream>
 #include <vector>
 
 
@@ -17,6 +18,7 @@ class TApplication : public QCoreApplication {
 private:
     Q_OBJECT
     TCommunicator *comm;
+    short getValues(const std::string, std::vector<std::vector<int>>&);
 
 public:
     TApplication(int, char **);

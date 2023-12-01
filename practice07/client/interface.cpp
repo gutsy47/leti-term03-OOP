@@ -13,10 +13,10 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent) {
     setFixedSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
     filename = new QLineEdit("input.txt", this);
-    filename->setGeometry(10, 10, 100, 30);
+    filename->setGeometry(10, 10, 250, 30);
 
     btnDraw = new QPushButton("Draw", this);
-    btnDraw->setGeometry(120, 10, 50, 30);
+    btnDraw->setGeometry(260, 10, 50, 30);
 
     connect(btnDraw, SIGNAL(pressed()), this, SLOT(formRequest()));
 
@@ -48,14 +48,25 @@ void TInterface::answer(QString msg) {
     QString text;
     int sepInd = (int) msg.indexOf(separator);
     int answer = msg.left(sepInd).toInt();
-    if (answer) {
-        text += "Good";
-    } else {
-        text += "Error";
+    switch (answer) {
+        case 0: break;
+        case -1:
+            text += "Error: File not found";
+            break;
+        case -2:
+            text += "Error: Invalid syntax";
+            break;
+        case -3:
+            text += "Error: Invalid size";
+            break;
+        case -4:
+            text += "Error: Non-zero diagonal element";
+            break;
+        default: text += "Error: Unexpected behaviour";
     }
 
-    msg = msg.mid(sepInd + 1, msg.length() - sepInd - 2);
-    sepInd = (int) msg.indexOf(separator);
-    text += msg.left(sepInd);
+//    msg = msg.mid(sepInd + 1, msg.length() - sepInd - 2);
+//    sepInd = (int) msg.indexOf(separator);
+//    text += msg.left(sepInd);
     output->setText(text);
 }
