@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.26)
-project(practice07-client)
+project(practice07)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_PREFIX_PATH "D:\\Data\\University\\Qt\\6.6.0\\mingw_64\\lib\\cmake")
@@ -15,19 +15,17 @@ find_package(Qt6 COMPONENTS
         REQUIRED
 )
 
-add_executable(practice07-client
-        application.h
-        application.cpp
+add_executable(practice07
+        parser.h
+        parser.cpp
+        sample.h
+        sample.cpp
         interface.h
         interface.cpp
         main.cpp
-        ../common/common.h
-        ../common/common.cpp
-        ../common/communicator.h
-        ../common/communicator.cpp
 )
 
-target_link_libraries(practice07-client
+target_link_libraries(practice07
         Qt::Core
         Qt::Widgets
         Qt::Network
