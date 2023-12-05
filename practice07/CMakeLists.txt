@@ -16,6 +16,8 @@ find_package(Qt6 COMPONENTS
 )
 
 add_executable(practice07
+        graph.h
+        graph.cpp
         parser.h
         parser.cpp
         sample.h

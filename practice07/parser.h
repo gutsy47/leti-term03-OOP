@@ -1,6 +1,8 @@
 #ifndef OOP_PARSER_H
 #define OOP_PARSER_H
 
+#include "graph.h"
+
 #include <QWidget>
 #include <QFileDialog>
 #include <QFile>
@@ -11,10 +13,12 @@
 
 
 class TParser : public QWidget {
+    friend class TSample;
+
 private:
     Q_OBJECT
 
-    std::vector<std::vector<int>> values;
+    Graph *graph;
 
     std::string getPath();
     short parseFile(const std::string&);
@@ -22,7 +26,6 @@ private:
 
 public:
     explicit TParser(QWidget *parent = nullptr);
-    std::vector<std::vector<int>> getValues();
 };
 
 

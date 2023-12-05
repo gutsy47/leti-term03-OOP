@@ -2,24 +2,24 @@
 
 
 TSample::TSample(TParser *parser) {
-    values = parser->getValues();
+    graph = parser->graph;
 }
 
 
 void TSample::changeSource(TParser *parser) {
-    values = parser->getValues();
+    graph = parser->graph;
 }
 
 
-bool TSample::isEmpty() {
-    return values.size() == 0;
+bool TSample::empty() {
+    return graph->empty();
 }
 
 
 void TSample::draw(QPainter* painter, QRect rect) {
     painter->drawText(
         rect,
-        QString().setNum(values.size()),
+        QString().setNum(graph->size()),
         QTextOption(Qt::AlignCenter)
     );
 }

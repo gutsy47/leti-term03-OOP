@@ -14,7 +14,7 @@ private:
     Q_OBJECT
 
     QPushButton *btnUpdFile;
-    TSample *_sample;
+    TSample *sample;
 
 public:
     explicit TInterface(TSample*, QWidget *parent = nullptr);

@@ -9,12 +9,12 @@
 
 class TSample {
 private:
-    std::vector<std::vector<int>> values;
+    Graph *graph;
 
 public:
     TSample(TParser*);
     void changeSource(TParser*);
-    bool isEmpty();
+    bool empty();
     void draw(QPainter*, QRect);
 };
 
