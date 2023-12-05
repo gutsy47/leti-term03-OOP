@@ -51,7 +51,7 @@ int Graph::size() const {
 }
 
 
-/// Return first vertex
-Vertex* Graph::getRoot() const {
-    return vertices[0];
+/// Return vector of pointers to the vertices
+std::vector<Vertex*> Graph::getVertices() const {
+    return vertices;
 }

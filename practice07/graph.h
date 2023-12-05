@@ -37,7 +37,7 @@ public:
     // Accessors
     bool empty() const;
     int size() const;
-    Vertex* getRoot() const;
+    std::vector<Vertex*> getVertices() const;
 };
 
 
