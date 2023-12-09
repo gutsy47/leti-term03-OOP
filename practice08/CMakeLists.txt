@@ -25,6 +25,8 @@ add_executable(practice08
         interface.h
         interface.cpp
         main.cpp
+        sample-switcher.cpp
+        sample-switcher.h
 )
 
 target_link_libraries(practice08

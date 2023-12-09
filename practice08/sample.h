@@ -9,16 +9,16 @@
 
 
 class TSample {
-private:
+protected:
     Graph *graph;
 
 public:
     // Constructor and updater
     TSample(TParser*);
-    void changeSource(TParser*);
+    virtual void changeSource(TParser*);
 
     bool empty();
-    void draw(QPainter*, QRect&);
+    virtual void draw(QPainter*, QRect&);
 };
 
 

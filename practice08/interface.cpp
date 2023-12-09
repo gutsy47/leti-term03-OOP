@@ -4,7 +4,7 @@
 const int WINDOW_SIZE_X = 400;
 const int WINDOW_SIZE_Y = 440;
 
-TInterface::TInterface(TSample *sample, QWidget *parent) : QWidget(parent) {
+TInterface::TInterface(TSampleSwitcher *sample, QWidget *parent) : QWidget(parent) {
     setWindowTitle("#8. State graph painter");
     setFixedSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
@@ -28,6 +28,13 @@ void TInterface::paintEvent(QPaintEvent*) {
     QRect rect(0, 0, WINDOW_SIZE_X, WINDOW_SIZE_Y - 40);
     sample->draw(&painter, rect);
     painter.end();
+}
+
+
+void TInterface::mousePressEvent(QMouseEvent* event) {
+    if (event->button() == Qt::LeftButton)  sample->updateActive(false);
+    if (event->button() == Qt::RightButton)  sample->updateActive(true);
+    update();
 }
 
 
