@@ -18,6 +18,8 @@ find_package(Qt6 COMPONENTS
 add_executable(coursework
         communicator.cpp
         communicator.h
+        application/game-settings.h
+        application/window-help.h
         application/box.cpp
         application/box.h
         application/player.cpp
@@ -27,7 +29,6 @@ add_executable(coursework
         application/game.cpp
         application/game.h
         application/main.cpp
-
 )
 
 target_link_libraries(coursework
