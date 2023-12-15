@@ -18,6 +18,12 @@ void Box::setRandomValue() {
 }
 
 
+/// Set custom amount of money in the box
+void Box::setValue(int amount) {
+    value = amount;
+}
+
+
 /// Return the amount of money in the box
 int Box::getValue() {
     return value;
@@ -29,7 +35,7 @@ void Box::setOpen(bool status) {
     opened = status;
 
     QIcon icon (opened ? std::getenv("BOX_OPENED_PATH") : std::getenv("BOX_CLOSED_PATH"));
-    if (!opened) this->setEnabled(false);
+    if (opened) this->setEnabled(false);
 
     this->setIcon(icon);
     this->setIconSize(QSize(SIZE, SIZE));

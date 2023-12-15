@@ -23,7 +23,8 @@ private:
 public:
     explicit Box(QWidget *parent = nullptr);
 
-    void setRandomValue(); // Value setter
+    void setRandomValue(); // Random value setter
+    void setValue(int);    // Value setter
     void setOpen(bool);    // Opened setter
     int getValue();        // Value getter
     bool isOpen();         // Opened getter

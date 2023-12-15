@@ -2,8 +2,22 @@
 #define OOP_PLAYER_H
 
 
-class Player {
+#include "game-settings.h"
 
+
+class Player {
+private:
+    int money;
+    int movesLeft;
+
+public:
+    Player();
+
+    void setMoney(int);
+    void setMovesLeft(int);
+    void move();
+    int getMoney();
+    int getMovesLeft();
 };
 
 

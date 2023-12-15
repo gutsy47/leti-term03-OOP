@@ -2,6 +2,8 @@
 #define OOP_GAME_SETTINGS_H
 
 
+/// Be careful changing settings
+/// It may break the game, no invalid settings handlers
 struct GameSettings {
     static const int boxAmount = 15;
     static const int boxMin    = 0;

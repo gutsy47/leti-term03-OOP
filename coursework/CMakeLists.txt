@@ -16,8 +16,8 @@ find_package(Qt6 COMPONENTS
 )
 
 add_executable(coursework
-        communicator.cpp
-        communicator.h
+        communicator/communicator.cpp
+        communicator/communicator.h
         application/game-settings.h
         application/window-help.h
         application/box.cpp
