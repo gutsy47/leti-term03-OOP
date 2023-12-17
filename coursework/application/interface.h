@@ -19,6 +19,13 @@ enum messages {
 };
 
 
+/**
+ * @class Interface
+ * @brief Represents the player's main GUI
+ *
+ * Manages the game interface, including boxes, players, and buttons.
+ * Handles P2P signals of the game
+ */
 class Interface : public QWidget {
 private:
     Q_OBJECT
@@ -40,26 +47,27 @@ private:
     QLabel *output;
 
 public:
+    // Constructor and destructor
     explicit Interface(QWidget *parent = nullptr);
     ~Interface() override;
 
 private:
-    void enableBoxes();
-    void disableBoxes();
-    QString getMoneyMsg(int);
+    void enableBoxes();          // Set the boxes clickable
+    void disableBoxes();         // Disable the boxes
+    QString getMoneyMsg(int);    // Get the correct declination of the number of coins
 
 public slots:
-    void startGame();
-    void waitForTurn();
-    void answer(QString);
+    void startGame();            // P1 makes the first move
+    void waitForTurn();          // P2 waits for the P1's first move
+    void answer(QString);        // Make next move
 
 private slots:
-    void onHelpPressed();
-    void onBoxClicked(Box* box);
-    void onTakeOrPassPressed();
+    void onHelpPressed();        // Show the help window
+    void onBoxClicked(Box* box); // Handle box click, go to Take/Pass part
+    void onTakeOrPassPressed();  // Handle Take/Pass click
 
 signals:
-    void request(QString);
+    void request(QString);       // Send the message to the P2
 };
 
 

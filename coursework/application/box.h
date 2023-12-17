@@ -10,6 +10,7 @@
 /**
  * @class Box
  * @brief Represents a box in the game
+ *
  * A descendant of QPushButton, but instead of
  * a normal button "box.png" is displayed
  */

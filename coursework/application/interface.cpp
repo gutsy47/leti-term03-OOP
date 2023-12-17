@@ -1,6 +1,7 @@
 #include "interface.h"
 
 
+/// Write to the QString operator
 const QChar separator(';');
 QString &operator>> (QString &str, const QString &other) {
     if (!str.isEmpty()) str.append(separator);
@@ -8,7 +9,7 @@ QString &operator>> (QString &str, const QString &other) {
     return str;
 }
 
-/// Generate an interface with disabled and hidden buttons. Waiting for second player
+/// Constructor. Generate an interface with disabled buttons. Connect signals
 Interface::Interface(QWidget *parent) : QWidget(parent) {
     int windowWidth = 90 * (N / 3 + N % 3);
 
@@ -40,15 +41,16 @@ Interface::Interface(QWidget *parent) : QWidget(parent) {
     connect(btnHelp, SIGNAL(pressed()), this, SLOT(onHelpPressed()));
 
     // Create 3 rows of boxes and hide them
+    srand(time(0)); // Set random seed for boxes values
     for (int i = 0; i < N; ++i) {
         // Create new Box and set value
         boxes[i] = new Box(this);
         boxes[i]->setRandomValue();
 
         // Draw boxes in three rows
-        if (i < N / 3) boxes[i]->draw(i * 90 + 5, 20);
+        if (i < N / 3)          boxes[i]->draw(i * 90 + 5, 20);
         else if (i < 2 * N / 3) boxes[i]->draw((i - N / 3) * 90 + 5, 110);
-        else boxes[i]->draw((i - 2 * N / 3) * 90 + 5, 200);
+        else                    boxes[i]->draw((i - 2 * N / 3) * 90 + 5, 200);
 
         // Each box is button. Connect box's signal with slot
         connect(
@@ -75,13 +77,13 @@ Interface::~Interface() {
 }
 
 
-/// Show updated boxes
+/// Enable boxes buttons
 void Interface::enableBoxes() {
     for (auto *box : boxes) if (!box->isOpen()) box->setEnabled(true);
 }
 
 
-/// Hide boxes
+/// Disable boxes buttons
 void Interface::disableBoxes() {
     for (auto *box : boxes) box->setEnabled(false);
 }
@@ -92,10 +94,14 @@ QString Interface::getMoneyMsg(int value) {
     int lastDigit = value % 10;
     int preLastDigit = (value / 10) % 10;
 
-    if (preLastDigit == 1) return QString("%1 монет").arg(value);
-    else if (lastDigit == 1) return QString("%1 монета").arg(value);
-    else if (lastDigit >= 2 && lastDigit <= 4) return QString("%1 монеты").arg(value);
-    else return QString("%1 монет").arg(value);
+    if (preLastDigit == 1)
+        return QString("%1 монет").arg(value);
+    else if (lastDigit == 1)
+        return QString("%1 монета").arg(value);
+    else if (lastDigit >= 2 && lastDigit <= 4)
+        return QString("%1 монеты").arg(value);
+    else
+        return QString("%1 монет").arg(value);
 }
 
 
@@ -113,7 +119,7 @@ void Interface::waitForTurn() {
 }
 
 
-/// Answer the request
+/// Answer the request. Update GUI for the new move
 void Interface::answer(QString data) {
     qDebug() << "Interface\treceived" << data;
 
@@ -198,7 +204,7 @@ void Interface::onBoxClicked(Box *box) {
 }
 
 
-/// Send the request
+/// Move done. Send data to the other player
 void Interface::onTakeOrPassPressed() {
     QString data;
     auto *btn = (QPushButton*) sender();
@@ -225,12 +231,13 @@ void Interface::onTakeOrPassPressed() {
         }
     }
     if (btn == btnPass) {
-        data >> QString().setNum(PLAYER_PASS);
-        data >> QString().setNum(player1.getMovesLeft());
+        data >> QString::number(PLAYER_PASS);
+        data >> QString::number(player1.getMovesLeft());
 
-        message = "Вы не взяли деньги\n" + QString(player2.getMovesLeft() > 0 ? "Ход противника" : "");
+        message = "Вы не взяли деньги\n";
+        message += QString(player2.getMovesLeft() > 0 ? "Ход противника" : "");
     }
-    for (auto *box : boxes) data >> QString().setNum(box->isOpen()) >> QString().setNum(box->getValue());
+    for (auto *box : boxes) data >> QString::number(box->isOpen()) >> QString::number(box->getValue());
     output->setText(message);
 
     // Send the message

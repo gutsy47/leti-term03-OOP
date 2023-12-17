@@ -7,6 +7,7 @@ char P2PCommunicator::hostRequest[]  = {0x05, 0x00, 0x01, 0x08};
 char P2PCommunicator::hostResponse[] = {0x05, 0x01, 0x00, 0x08};
 
 
+/// Constructor
 P2PCommunicator::P2PCommunicator(QHostAddress remoteHost, quint16 basePort, QObject *parent) : QUdpSocket(parent) {
     handshakeStatus = -1;
 
@@ -30,6 +31,7 @@ P2PCommunicator::P2PCommunicator(QHostAddress remoteHost, quint16 basePort, QObj
 }
 
 
+/// Init the handshake, send the host request
 void P2PCommunicator::initHandshake() {
     if (handshakeStatus < 0) {
         handshakeStatus = 0;
@@ -38,6 +40,7 @@ void P2PCommunicator::initHandshake() {
 }
 
 
+/// Verify order, set the host and client
 void P2PCommunicator::verifyOrder(const char *msg, const int size) {
     if (size == hostMsgSize) {
         if (memcmp(msg, hostRequest, size) == 0) {
@@ -53,6 +56,7 @@ void P2PCommunicator::verifyOrder(const char *msg, const int size) {
 }
 
 
+/// Swap params.localPort and params.remotePort
 void P2PCommunicator::swapPorts() {
     quint16 tmp            = params.localReadPort;
     params.localReadPort   = params.remoteWritePort;
@@ -60,6 +64,7 @@ void P2PCommunicator::swapPorts() {
 }
 
 
+/// Send a message to the remote
 void P2PCommunicator::send(QByteArray msg) {
     if (!isReady) return;
 
@@ -68,6 +73,7 @@ void P2PCommunicator::send(QByteArray msg) {
 }
 
 
+/// Receive a message from the remote
 void P2PCommunicator::receive() {
     if (!hasPendingDatagrams()) return;
 

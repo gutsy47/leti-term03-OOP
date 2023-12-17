@@ -1,6 +1,7 @@
 #include "game.h"
 
 
+/// Constructor. Inits P2P and GUI
 Game::Game(int argc, char *argv[]) : QApplication(argc, argv) {
     communicator = new P2PCommunicator();
     communicator->initHandshake();
@@ -16,6 +17,7 @@ Game::Game(int argc, char *argv[]) : QApplication(argc, argv) {
 }
 
 
+/// Catches handshake completion signal and starts the game
 void Game::handshakeDone(int order) {
     qDebug() << "GameServer\tqueued\t" << order;
 
@@ -24,11 +26,13 @@ void Game::handshakeDone(int order) {
 }
 
 
+/// Receive a message
 void Game::from(const QByteArray &data) {
     interface->answer(QString(data));
 }
 
 
+/// Send a message
 void Game::to(const QString &data) {
     communicator->send(QByteArray().append(data.toStdString()));
 }

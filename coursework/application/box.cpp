@@ -6,6 +6,7 @@
 const int SIZE = 80; // Button size in pixels
 
 
+/// Constructor
 Box::Box(QWidget *parent) : QPushButton(parent) {
     opened = false;
     value = 0;
