@@ -23,6 +23,7 @@ add_executable(courseworkV3-dashboard
         interface.h
         interface.cpp
         main.cpp
+        ../config.h
 )
 
 target_link_libraries(courseworkV3-dashboard

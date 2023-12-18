@@ -16,14 +16,17 @@ find_package(Qt6 COMPONENTS
 )
 
 add_executable(courseworkV3-roads
+        ../config.h
         ../communicator/communicator.cpp
         ../communicator/communicator.h
-        application.h
-        application.cpp
+        sample-light.h
+        sample-light.cpp
+        sample-road.h
+        sample-road.cpp
         interface.h
         interface.cpp
-        traffic-light.h
-        traffic-light.cpp
+        application.h
+        application.cpp
         main.cpp
 )
 
