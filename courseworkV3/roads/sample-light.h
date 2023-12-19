@@ -5,20 +5,14 @@
 #include <QPainter>
 
 
+enum { OFF = -1, RED = 0, YELLOW = 1, GREEN = 2 };
+
+
 class TLight {
 private:
-    enum { MANUAL = 0, AUTOMATIC = 1, AUTONOMOUS = 2} mode = AUTOMATIC;
-    enum { OFF = -1, RED = 0, YELLOW = 1, GREEN = 2 } state = OFF;
+    short state = OFF;
 
 public:
-    // Переключение режимов
-    void setAutonomousMode() { mode = AUTONOMOUS; };
-    void setAutomaticMode()  { mode = AUTOMATIC; };
-    void setManualMode()     { mode = MANUAL; };
-
-    // Получить текущий режим
-    int getMode() { return mode; };
-
     // Переключение состояний
     void turnOff()    { state = OFF; };
     void turnRed()    { state = RED; };

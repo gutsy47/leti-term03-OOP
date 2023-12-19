@@ -16,14 +16,6 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent) {
     setFixedSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
     road = new TRoad();
     for (int i = 0; i < LIGHTS_COUNT; ++i) lights[i] = new TLight();
-
-    // DELETE ME
-    lights[0]->turnOff();
-    lights[1]->turnRed();
-    lights[2]->turnYellow();
-    lights[3]->turnGreen();
-    // DELETE ME
-
 }
 
 
@@ -46,5 +38,20 @@ void TInterface::paintEvent(QPaintEvent*) {
 
 
 void TInterface::answer(QString msg) {
+    qDebug() << "Interface\treceived " << msg;
 
+    // Parse the message
+    QStringList msgList = msg.split(separator);
+    int index = msgList[0].toInt();
+    int state = msgList[1].toInt();
+
+    switch (state) {
+        case OFF:    lights[index]->turnOff(); break;
+        case RED:    lights[index]->turnRed(); break;
+        case YELLOW: lights[index]->turnYellow(); break;
+        case GREEN:  lights[index]->turnGreen(); break;
+        default:     break;
+    }
+
+    update();
 }

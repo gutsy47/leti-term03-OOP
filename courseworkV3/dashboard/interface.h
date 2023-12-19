@@ -8,6 +8,11 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QLabel>
+#include <QTimer>
+
+
+enum { OFF = -1, RED = 0, YELLOW = 1, GREEN = 2 };
+enum { MANUAL = 0, AUTOMATIC = 1, AUTONOMOUS = 2};
 
 
 class TDashboard : public QWidget {
@@ -30,6 +35,14 @@ private:
 public:
     explicit TDashboard(QWidget* = nullptr);
     ~TDashboard() override;
+
+private slots:
+    void onBtnState();
+    void onRadioBtn();
+
+signals:
+    void dashEnable(bool);
+    void newMode(short);
 };
 
 
@@ -38,14 +51,32 @@ public:
 class TDevice : public QWidget {
 private:
     Q_OBJECT
-    enum { OFF = -1, RED = 0, YELLOW = 1, GREEN = 2 } state;
+    short       mode;
+    short       state;
+    short       counterVal;
     bool        isEnabled;
     QPushButton *btnState;
-    QLabel      *counter;
+    QPushButton *btnCounter;
 
 public:
     explicit TDevice(QWidget* = nullptr);
     ~TDevice() override;
+
+private:
+    void setState(short);
+
+private slots:
+    void onBtnState();
+    void onBtnCounter();
+
+public slots:
+    void onDashEnable(bool);
+    void onNewMode(short);
+    void tact();
+
+signals:
+    void enable(bool);
+    void updState(short);
 };
 
 
@@ -56,10 +87,17 @@ private:
     Q_OBJECT
     TDashboard *dashboard;
     TDevice    *devices[LIGHTS_COUNT];
+    QTimer     *timer;
 
 public:
     explicit TInterface(QWidget* = nullptr);
     ~TInterface() override;
+
+public slots:
+    void onUpdState(short);
+
+signals:
+    void request(QString);
 };
 
 
