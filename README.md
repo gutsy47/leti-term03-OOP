@@ -1,7 +1,3 @@
-# LETI OOP 3rd term practices & course work
+# LETI OOP 3rd term
 
 All details are provided in *report.docx* files
-
-### Practice 1. Matrices
-### Practice 2. 
-### Practice 3. 
